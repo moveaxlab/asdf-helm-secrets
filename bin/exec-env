@@ -14,10 +14,9 @@
 # asdf exec <command> [args...]: Executes the command shim for current version
 # asdf env <command> [util]: Runs util (default: env) inside the environment used for command shim execution.
 
-setup_plugin_usage() {
-	echo "here we need to enable the use of this pecific version of helm plugin"
-	helm plugin uninstall helm-secrets
-	helm plugin install "${ASDF_INSTALL_PATH}"
+setup_helm_plugin_usage() {
+	helm plugin uninstall secrets >>/dev/null 2>&1 || true
+	ln -s "${ASDF_INSTALL_PATH}/bin" $(helm env HELM_PLUGINS)/helm-secrets
 }
 
-setup_plugin_usage
+setup_helm_plugin_usage
