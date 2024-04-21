@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for helm-secrets.
 GH_REPO="https://github.com/jkroepke/helm-secrets"
 TOOL_NAME="helm-secrets"
 TOOL_TEST="helm secrets --version"
