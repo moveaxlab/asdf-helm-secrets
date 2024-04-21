@@ -47,8 +47,8 @@ download_release() {
 
 setup_helm_plugin_usage() {
 	helm plugin uninstall secrets >>/dev/null 2>&1 || true
-	mkdir -p "$(helm env HELM_PLUGINS)" || fail  "Could not create driectory $(helm env HELM_PLUGINS)"
-	ln -s "${ASDF_INSTALL_PATH}/bin" "$(helm env HELM_PLUGINS)/helm-secrets" || fail  "Could not link plugin to helm"
+	mkdir -p "$(helm env HELM_PLUGINS)" || fail "Could not create driectory $(helm env HELM_PLUGINS)"
+	ln -s "${ASDF_INSTALL_PATH}/bin" "$(helm env HELM_PLUGINS)/helm-secrets" || fail "Could not link plugin to helm"
 }
 
 install_version() {
