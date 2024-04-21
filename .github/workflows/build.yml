@@ -16,6 +16,8 @@ jobs:
           - macos-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: asdf_plugin_add_helm
+        uses: asdf-vm/actions/install@v2
       - name: asdf_plugin_test
         uses: asdf-vm/actions/plugin-test@v2
         with:
