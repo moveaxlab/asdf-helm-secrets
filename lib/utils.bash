@@ -45,7 +45,7 @@ download_release() {
 }
 
 setup_helm_plugin_usage() {
-	rm -rf "${HELM_PLUGINS_FOLDER}" || true
+	rm -rf "${HELM_PLUGINS_FOLDER}/helm-secrets" || true
 	mkdir -p "${HELM_PLUGINS_FOLDER}" || fail "Could not create directory '${HELM_PLUGINS_FOLDER}'"
 	ln -s "${ASDF_INSTALL_PATH}/bin" "${HELM_PLUGINS_FOLDER}/helm-secrets" || fail "Could not link plugin to helm"
 }
