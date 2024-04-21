@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Environment Variables available to script
+
+# ASDF_INSTALL_TYPE: version or ref
+# ASDF_INSTALL_VERSION:
+#   Full version number if ASDF_INSTALL_TYPE=version.
+#   Git ref (tag/commit/branch) if ASDF_INSTALL_TYPE=ref.
+# ASDF_INSTALL_PATH: The path to where the tool has been, or should be installed.
+
+# Commands that invoke this script
+
+# asdf which <command>: Display the path to an executable
+# asdf exec <command> [args...]: Executes the command shim for current version
+# asdf env <command> [util]: Runs util (default: env) inside the environment used for command shim execution.
+
+setup_plugin_usage() {
+	echo "here we need to enable the use of this pecific version of helm plugin"
+	helm plugin uninstall helm-secrets
+	helm plugin install "${ASDF_INSTALL_PATH}"
+}
+
+setup_plugin_usage
