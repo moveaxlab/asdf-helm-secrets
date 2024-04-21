@@ -31,8 +31,6 @@ list_github_tags() {
 }
 
 list_all_versions() {
-	# TODO: Adapt this. By default we simply list the tag names from GitHub releases.
-	# Change this function if helm-secrets has other means of determining installable versions.
 	list_github_tags
 }
 
@@ -41,11 +39,16 @@ download_release() {
 	version="$1"
 	filename="$2"
 
-	# TODO: Adapt the release URL convention for helm-secrets
 	url="$GH_REPO/archive/v${version}.tar.gz"
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
+}
+
+setup_helm_plugin_usage() {
+	helm plugin uninstall secrets >>/dev/null 2>&1 || true
+	mkdir -p "$(helm env HELM_PLUGINS)" || fail  "Could not create driectory $(helm env HELM_PLUGINS)"
+	ln -s "${ASDF_INSTALL_PATH}/bin" "$(helm env HELM_PLUGINS)/helm-secrets" || fail  "Could not link plugin to helm"
 }
 
 install_version() {
@@ -61,10 +64,11 @@ install_version() {
 		mkdir -p "$install_path"
 		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
 
-		# TODO: Assert helm-secrets executable exists.
 		local tool_cmd
 		tool_cmd="scripts/run.sh"
 		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
+
+		setup_helm_plugin_usage
 
 		echo "$TOOL_NAME $version installation was successful!"
 	) || (

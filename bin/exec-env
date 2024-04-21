@@ -1,22 +1,17 @@
 #!/usr/bin/env bash
 
-# Environment Variables available to script
-
-# ASDF_INSTALL_TYPE: version or ref
-# ASDF_INSTALL_VERSION:
-#   Full version number if ASDF_INSTALL_TYPE=version.
-#   Git ref (tag/commit/branch) if ASDF_INSTALL_TYPE=ref.
-# ASDF_INSTALL_PATH: The path to where the tool has been, or should be installed.
-
 # Commands that invoke this script
 
 # asdf which <command>: Display the path to an executable
 # asdf exec <command> [args...]: Executes the command shim for current version
 # asdf env <command> [util]: Runs util (default: env) inside the environment used for command shim execution.
 
-setup_helm_plugin_usage() {
-	helm plugin uninstall secrets >>/dev/null 2>&1 || true
-	ln -s "${ASDF_INSTALL_PATH}/bin" $(helm env HELM_PLUGINS)/helm-secrets
-}
+set -euo pipefail
+
+current_script_path=${BASH_SOURCE[0]}
+plugin_dir=$(dirname "$(dirname "$current_script_path")")
+
+# shellcheck source=./lib/utils.bash
+source "${plugin_dir}/lib/utils.bash"
 
 setup_helm_plugin_usage
