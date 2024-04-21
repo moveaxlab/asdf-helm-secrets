@@ -4,7 +4,7 @@ set -euo pipefail
 
 GH_REPO="https://github.com/jkroepke/helm-secrets"
 TOOL_NAME="helm-secrets"
-TOOL_TEST="helm secrets --version"
+HELM_PLUGINS_FOLDER="${HOME}/.local/share/helm/plugins"
 
 fail() {
 	echo -e "asdf-$TOOL_NAME: $*"
@@ -45,9 +45,9 @@ download_release() {
 }
 
 setup_helm_plugin_usage() {
-	helm plugin uninstall secrets >>/dev/null 2>&1 || true
-	mkdir -p "$(helm env HELM_PLUGINS)" || fail "Could not create driectory $(helm env HELM_PLUGINS)"
-	ln -s "${ASDF_INSTALL_PATH}/bin" "$(helm env HELM_PLUGINS)/helm-secrets" || fail "Could not link plugin to helm"
+	rm -rf "${HELM_PLUGINS_FOLDER}" || true
+	mkdir -p "${HELM_PLUGINS_FOLDER}" || fail "Could not create directory '${HELM_PLUGINS_FOLDER}'"
+	ln -s "${ASDF_INSTALL_PATH}/bin" "${HELM_PLUGINS_FOLDER}/helm-secrets" || fail "Could not link plugin to helm"
 }
 
 install_version() {
